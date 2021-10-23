@@ -1,27 +1,33 @@
 import React from "react";
 import { Component } from "react";
-// import { fetchCurrencies } from "../services/ApiService";
-// import CurrencyList from "../components/CurrencyList";
-// import SearchForm from "../components/SearchForm";
+import { fetchCurrencies } from "../services/ApiService";
+import CurrencyList from "../components/CurrencyList/CurrencyList";
+import SearchForm from "../components/SearchForm/SearchForm";
 
 class AllCurrenciesPage extends Component {
   state = {
     currencies: [],
   };
 
-  // async componentDidMount() {
-  //   fetchCurrencies().then((response) => {
-  //     this.setState({ currencies: response.data.results });
-  //   });
-  // }
+  async componentDidMount() {
+    fetchCurrencies().then((response) => {
+      // console.log(response.data.rates);
+      const currencies = Object.keys(response.data.rates);
+      // console.log(currencies);
+      this.setState({ currencies: currencies });
+      // console.log(this.state.currencies);
+
+      // console.log(response.data.date);
+      // console.log(response.data.rates);
+    });
+  }
 
   render() {
     return (
       <>
-        <p>Тут должен быть список</p>
-        {/* <SearchForm />
+        <SearchForm />
 
-        <CurrencyList currencies={this.state.currencies} /> */}
+        <CurrencyList currencies={this.state.currencies} />
       </>
     );
   }
