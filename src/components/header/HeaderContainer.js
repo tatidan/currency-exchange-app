@@ -6,6 +6,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
-  background-color: ${(props) => props.colors.secondary};
+  background-color: ${(props) => props.colors.background};
   color: ${(props) => props.colors.text};
 `;

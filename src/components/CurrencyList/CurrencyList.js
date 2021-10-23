@@ -4,15 +4,34 @@ import Section from "../Section";
 import sprite from "../../icons/sprite.svg";
 import { CurrencyListStyled } from "./CurrencyListStyled";
 
-// const getIcon = (selected) => {
-//   if (selected) {
+// const getIcon = (isActive) => {
+//   if (isActive === "true") {
 //     return "#icon-star-full";
 //   }
-//   return "#icon-star-empty";
+//   if (isActive === "false") {
+//     return "#icon-star-empty";
+//   }
 // };
 
+//добавить toggler для isActive
+
+// document
+//   .getElementById("#CurrencyList")
+//   .addEventListener("click", function (e) {
+//     console.log(e.currentTarget);
+//     console.log(e);
+//     // if (e.target && e.currentTarget == "LI") {
+//     //   console.log(e.target.id + " was clicked");
+//     // }
+//   });
+
 const handleClick = (e) => {
-  console.log(e.currentTarget);
+  const selectedCurrency = e.currentTarget;
+  console.log(selectedCurrency);
+  selectedCurrency.setAttribute("isActive", "true");
+  console.log(selectedCurrency);
+  selectedCurrency.classList.toggle("isActive");
+
   //если кликаем на него, он сохраняется в localStorage
   //звезда меняется - toggler
   //попадает в favourites
@@ -20,6 +39,8 @@ const handleClick = (e) => {
 };
 
 const CurrencyList = ({ currencies }) => {
+  // const [state, setstate] = useState(initialState);
+
   return (
     <Section>
       <CurrencyListStyled>
@@ -35,6 +56,10 @@ const CurrencyList = ({ currencies }) => {
                 className="Currency__Icon"
                 href={sprite + "#icon-star-empty"}
               ></use>
+              {/* <use
+                  className="Currency__Icon"
+                  href={sprite + getIcon(isActive)}
+                ></use> */}
             </svg>
           </li>
         ))}

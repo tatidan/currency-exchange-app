@@ -7,25 +7,31 @@ import SearchForm from "../components/SearchForm/SearchForm";
 class AllCurrenciesPage extends Component {
   state = {
     currencies: [],
+    codes: [],
   };
 
   async componentDidMount() {
-    fetchCurrencies().then((response) => {
-      // console.log(response.data.rates);
-      const currencies = Object.keys(response.data.rates);
-      // console.log(currencies);
-      this.setState({ currencies: currencies });
-      // console.log(this.state.currencies);
+    fetchCurrencies().then((result) => {
+      const symbolsArr = Object.values(result.data.symbols);
+      const currenciesCodes = symbolsArr.map((a) => a.code);
+      const currenciesDescription = symbolsArr.map((a) => a.description);
 
-      // console.log(response.data.date);
-      // console.log(response.data.rates);
+      this.setState({
+        currencies: currenciesDescription,
+        codes: currenciesCodes,
+      });
     });
+
+    // fetchRates().then((response) => {
+    //   return response;
+    // });
   }
+  // rates для exchange использовать
 
   render() {
     return (
       <>
-        <SearchForm />
+        <SearchForm title="All currencies" />
 
         <CurrencyList currencies={this.state.currencies} />
       </>

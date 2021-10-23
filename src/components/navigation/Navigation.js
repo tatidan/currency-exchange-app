@@ -26,9 +26,21 @@ const Navigation = () => {
             My currencies
           </NavLink>
         </li>
+        <li className="NavListItem">
+          <NavLink
+            to="/exchange"
+            className="NavLink"
+            activeClassName="NavLink--active"
+          >
+            Exchange
+          </NavLink>
+        </li>
       </ul>
     </NavigationStyled>
   );
 };
 
 export default Navigation;
+
+// exchange page не должен быть в навигации
+// открывается по клику на валюту в CurrencyList

@@ -25,4 +25,14 @@ export const mainRoutes = [
       )
     ),
   },
+  {
+    name: "exchange",
+    path: "/exchange",
+    exact: true,
+    restricted: false,
+    redirectTo: "/exchange",
+    component: lazy(() =>
+      import("../pages/ExchangePage" /* webpackChuckName: "ExchangePage"*/)
+    ),
+  },
 ];

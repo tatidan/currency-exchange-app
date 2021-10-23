@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { SearchFormStyled } from "./SearchFormStyled";
+import sprite from "../../icons/sprite.svg";
 // import { connect } from "react-redux";
 // import { onSearchFilter } from "../redux/currency-actions";
 // import { getFilter } from "../redux/currency-selectors";
@@ -20,8 +21,16 @@ class SearchForm extends Component {
     e.preventDefault();
     console.log(this.state.query);
     // this.props.onSubmit(this.state.query);
+
+    //  this.props.contacts.find(
+    //    (contact) => contact.name.toLowerCase() === this.state.name.toLowerCase()
+    //  )
+    //    ? alert(`Contact with the name ${this.state.name} already exists.`)
+    //    : this.props.addNewContact({ ...this.state });
+
     this.reset();
   };
+
   reset = () => {
     this.setState({ query: "" });
   };
@@ -29,7 +38,7 @@ class SearchForm extends Component {
   render() {
     return (
       <SearchFormStyled onSubmit={this.handleSubmit}>
-        <h1>All currencies list</h1>
+        <h1>{this.props.title}</h1>
 
         <label className="searchFormLabel">
           <input
@@ -42,6 +51,12 @@ class SearchForm extends Component {
             // value={filter}
             // onChange={onSearchHandler}
           />
+          <svg className="Currency__IconBox" width="15px" height="15px">
+            <use
+              className="Currency__Icon"
+              href={sprite + "#icon-search"}
+            ></use>
+          </svg>
         </label>
       </SearchFormStyled>
     );
