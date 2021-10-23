@@ -1,0 +1,10 @@
+.ThemeSwitcher {
+  display: flex;
+  align-self: center;
+}
+.ThemeSwitcher--day {
+  margin-right: 10px;
+}
+.ThemeSwitcher--night {
+  margin-left: 10px;
+}
