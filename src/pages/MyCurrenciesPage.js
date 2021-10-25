@@ -1,26 +1,28 @@
 import React from "react";
-// import { Route } from "react-router";
-// import CurrencyList from "../components/CurrencyList/CurrencyList";
+import { connect } from "react-redux";
 import SearchForm from "../components/SearchForm/SearchForm";
-// import ExchangePage from "./ExchangePage";
+import CurrencyList from "../components/CurrencyList/CurrencyList";
 
-const MyCurrenciesPage = () => {
-  //взять selectedCurrencies из LocalStorage
+const MyCurrenciesPage = ({ selectedCurrencies, history }) => {
+  const setExchange = (code) => {
+    history.push(`/mycurrencies/${code}`);
+  };
 
   return (
     <>
       <SearchForm title="My currencies" />
-      {/* <CurrencyList currencies={selectedCurrencies} /> */}
 
-      {/* <Route
-        path={`${this.props.match.url}/exchange`}
-        component={ExchangePage}
-        exact={false}
-      /> */}
+      <CurrencyList
+        currencies={selectedCurrencies}
+        setLink={setExchange}
+        link={true}
+      />
     </>
   );
 };
 
-//по клику на валюту переходим в конвертер валют - ExchangePage
+const mapStateToProps = (state) => ({
+  selectedCurrencies: state.currencies.filter((currency) => currency.isActive),
+});
 
-export default MyCurrenciesPage;
+export default connect(mapStateToProps)(MyCurrenciesPage);

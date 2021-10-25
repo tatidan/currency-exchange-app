@@ -1,42 +1,24 @@
-import React from "react";
-import { Component } from "react";
-import { fetchCurrencies } from "../services/ApiService";
-import CurrencyList from "../components/CurrencyList/CurrencyList";
+import React, { useEffect } from "react";
 import SearchForm from "../components/SearchForm/SearchForm";
+import CurrencyList from "../components/CurrencyList/CurrencyList";
+import { fetchCurrencies } from "../redux/currency-operations";
+import { useSelector, useDispatch } from "react-redux";
 
-class AllCurrenciesPage extends Component {
-  state = {
-    currencies: [],
-    codes: [],
-  };
+const AllCurrenciesPage = () => {
+  const dispatch = useDispatch();
+  const currencies = useSelector((state) => state.currencies);
 
-  async componentDidMount() {
-    fetchCurrencies().then((result) => {
-      const symbolsArr = Object.values(result.data.symbols);
-      const currenciesCodes = symbolsArr.map((a) => a.code);
-      const currenciesDescription = symbolsArr.map((a) => a.description);
+  useEffect(() => {
+    dispatch(fetchCurrencies());
+  }, [dispatch]);
 
-      this.setState({
-        currencies: currenciesDescription,
-        codes: currenciesCodes,
-      });
-    });
+  return (
+    <>
+      <SearchForm title="All currencies" />
 
-    // fetchRates().then((response) => {
-    //   return response;
-    // });
-  }
-  // rates для exchange использовать
-
-  render() {
-    return (
-      <>
-        <SearchForm title="All currencies" />
-
-        <CurrencyList currencies={this.state.currencies} />
-      </>
-    );
-  }
-}
+      <CurrencyList currencies={currencies} />
+    </>
+  );
+};
 
 export default AllCurrenciesPage;

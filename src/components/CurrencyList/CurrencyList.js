@@ -1,65 +1,46 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
-import Section from "../Section";
+import { ThemeContext } from "../../App";
 import sprite from "../../icons/sprite.svg";
+import Section from "../Section";
 import { CurrencyListStyled } from "./CurrencyListStyled";
+import { connect } from "react-redux";
+import { setActive } from "../../redux/currency-actions";
 
-// const getIcon = (isActive) => {
-//   if (isActive === "true") {
-//     return "#icon-star-full";
-//   }
-//   if (isActive === "false") {
-//     return "#icon-star-empty";
-//   }
-// };
-
-//добавить toggler для isActive
-
-// document
-//   .getElementById("#CurrencyList")
-//   .addEventListener("click", function (e) {
-//     console.log(e.currentTarget);
-//     console.log(e);
-//     // if (e.target && e.currentTarget == "LI") {
-//     //   console.log(e.target.id + " was clicked");
-//     // }
-//   });
-
-const handleClick = (e) => {
-  const selectedCurrency = e.currentTarget;
-  console.log(selectedCurrency);
-  selectedCurrency.setAttribute("isActive", "true");
-  console.log(selectedCurrency);
-  selectedCurrency.classList.toggle("isActive");
-
-  //если кликаем на него, он сохраняется в localStorage
-  //звезда меняется - toggler
-  //попадает в favourites
-  //попадает на вторую страницу
+const getIcon = (isActive) => {
+  if (isActive) {
+    return "#icon-star-full";
+  } else {
+    return "#icon-star-empty";
+  }
 };
 
-const CurrencyList = ({ currencies }) => {
-  // const [state, setstate] = useState(initialState);
+const CurrencyList = ({ currencies, link = false, setLink, setActive }) => {
+  const { theme } = useContext(ThemeContext);
+
+  const handleClick = (e) => {
+    const code = e.currentTarget.id;
+    !link ? setActive(code) : setLink(code);
+    // console.log(code);
+  };
 
   return (
     <Section>
-      <CurrencyListStyled>
+      <CurrencyListStyled id="#CurrencyListMain" colors={theme.colors}>
         {currencies.map((currency) => (
           <li
-            key={currency}
+            key={currency.code}
             className="Currency__ListItem"
             onClick={handleClick}
+            id={currency.code}
           >
-            <option className="Currency__Name">{currency}</option>
+            <span className="Currency__Name">{currency.description}</span>
+
             <svg width="15px" height="15px">
               <use
                 className="Currency__Icon"
-                href={sprite + "#icon-star-empty"}
+                href={sprite + getIcon(currency.isActive)}
               ></use>
-              {/* <use
-                  className="Currency__Icon"
-                  href={sprite + getIcon(isActive)}
-                ></use> */}
             </svg>
           </li>
         ))}
@@ -68,4 +49,4 @@ const CurrencyList = ({ currencies }) => {
   );
 };
 
-export default withRouter(CurrencyList);
+export default connect(null, { setActive })(withRouter(CurrencyList));

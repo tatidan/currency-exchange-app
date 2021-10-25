@@ -9,12 +9,12 @@ const ThemeSwitcher = () => {
   return (
     <>
       <label className="ThemeSwitcher">
-        <span className="ThemeSwitcher--day">Day</span>
+        <span className="ThemeSwitcher--day">Light theme</span>
         <Switch
           onChange={changeTheme}
           checked={theme.title === "dark" ? true : false}
         />
-        <span className="ThemeSwitcher--night">Night</span>
+        <span className="ThemeSwitcher--night">Dark theme</span>
       </label>
     </>
   );

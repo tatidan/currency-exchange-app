@@ -19,14 +19,15 @@ class SearchForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.query);
+    // console.log(this.state.query);
     // this.props.onSubmit(this.state.query);
+    // console.log(this.props);
 
-    //  this.props.contacts.find(
-    //    (contact) => contact.name.toLowerCase() === this.state.name.toLowerCase()
+    //  this.props.currencies.find(
+    //    (currency) => currency.description.toLowerCase() === this.state.query.toLowerCase()
     //  )
-    //    ? alert(`Contact with the name ${this.state.name} already exists.`)
-    //    : this.props.addNewContact({ ...this.state });
+    //    ? onFilterRender{this.state.query}
+    //    : this.props.addNewCurrency({ ...this.state });
 
     this.reset();
   };

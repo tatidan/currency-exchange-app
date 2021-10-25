@@ -10,7 +10,6 @@ const usePersistedTheme = () => {
   const [theme, setTheme] = useState(getTheme());
 
   const toggler = () => {
-    console.log(theme);
     theme.title === "dark" ? setTheme(themes.light) : setTheme(themes.dark);
   };
 

@@ -1,68 +1,66 @@
-import React, { Component } from "react";
-import { fetchRates } from "../services/ApiService";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchRates } from "../redux/currency-operations";
 
-const exchange_URL =
-  "https://api.exchangerate.host/convert?from=USD&to=EUR&amount=1200";
+const ExchangePage = ({ match }) => {
+  const [value, setValue] = useState(100);
+  const currency = useSelector((state) =>
+    state.currencies.find((currency) => currency.code === match.params.code)
+  );
+  const rates = useSelector((state) => state.rates || 0);
 
-class ExchangePage extends Component {
-  componentDidMount() {
-    fetchRates().then((response) => {
-      console.log(response);
-      // return response;
-      // видим все курсы валют от базового EUR
-      // этот ход не подходит, нужно использовать exchange_URL
-      // писать отдельный запрос
-    });
-  }
+  const dispatch = useDispatch();
 
-  render() {
-    const styles = {
-      wrapper: {
-        display: "flex",
-        flexDirection: "column",
-        margin: "0 auto",
-      },
-      subdivision: {
-        display: "flex",
-        flexDirection: "raw",
-      },
-      label: {
-        display: "flex",
-        flexDirection: "column",
-        marginRight: "20px",
-      },
-      input: {
-        width: "300px",
-        padding: "10px",
-      },
-    };
-    return (
-      <div style={styles.wrapper}>
-        <h3>EUR</h3>
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
-        <div style={styles.subdivision}>
-          <label style={styles.label}>
-            EUR
-            <input style={styles.input} type="number" />
-          </label>
+  useEffect(() => {
+    dispatch(fetchRates(match.params.code, value));
+  }, [dispatch, value, match]);
 
-          <label style={styles.label}>
-            USD
-            <input style={styles.input} type="number" />
-          </label>
-        </div>
+  const styles = {
+    wrapper: {
+      display: "flex",
+      flexDirection: "column",
+      marginLeft: "25vw",
+    },
+    subdivision: {
+      display: "flex",
+      flexDirection: "raw",
+    },
+    label: {
+      display: "flex",
+      flexDirection: "column",
+      marginRight: "20px",
+    },
+    input: {
+      width: "300px",
+      padding: "10px",
+    },
+  };
+  return (
+    <div style={styles.wrapper}>
+      <h3>EUR</h3>
+
+      <div style={styles.subdivision}>
+        <label style={styles.label}>
+          {currency?.code}
+          <input
+            style={styles.input}
+            type="number"
+            value={value}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label style={styles.label}>
+          EUR
+          <input style={styles.input} type="text" value={rates} readOnly />
+        </label>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
 export default ExchangePage;
-
-// вместо EUR выбранная(кликнутая) валюта, это base
-// во второй инпут должна стать цифра *rate
-
-// rate доступен как value, ключом которого является USD
-
-// amount это input.value (отправка запроса по событию onSubmit)
-// from EUR to USD это тоже динамические коды валют в линке
-
-// делаем запрос, получаем результат, записываем его во второй инпут

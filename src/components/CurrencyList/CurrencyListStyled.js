@@ -10,7 +10,7 @@ export const CurrencyListStyled = styled.ul`
     display: flex;
     width: 500px;
     height: 40px;
-    border: 1px solid white;
+    border: 1px solid ${(props) => props.colors.text};
     align-items: center;
     justify-content: space-between;
     padding-left: 20px;
@@ -19,6 +19,6 @@ export const CurrencyListStyled = styled.ul`
   }
 
   .Currency__Icon {
-    fill: white;
+    fill: ${(props) => props.colors.text};
   }
 `;
